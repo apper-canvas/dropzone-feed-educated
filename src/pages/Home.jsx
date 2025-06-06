@@ -589,10 +589,9 @@ function FolderTreeItem({ folder, selectedFolderId, onSelect, onDelete, files, l
           onDelete={onDelete}
           files={files}
           level={level + 1}
-        />
+/>
       ))}
     </div>
-</div>
   )
 }
 
