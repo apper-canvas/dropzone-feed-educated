@@ -1,0 +1,70 @@
+[
+  {
+    "id": "folder_1",
+    "name": "Documents",
+    "parentId": null,
+    "path": "/Documents",
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z",
+    "color": "#3B82F6",
+    "icon": "FileText",
+    "children": [
+      {
+        "id": "folder_2",
+        "name": "Work",
+        "parentId": "folder_1",
+        "path": "/Documents/Work",
+        "createdAt": "2024-01-15T10:30:00Z",
+        "updatedAt": "2024-01-15T10:30:00Z",
+        "color": "#EF4444",
+        "icon": "Briefcase",
+        "children": []
+      },
+      {
+        "id": "folder_3",
+        "name": "Personal",
+        "parentId": "folder_1",
+        "path": "/Documents/Personal",
+        "createdAt": "2024-01-15T11:00:00Z",
+        "updatedAt": "2024-01-15T11:00:00Z",
+        "color": "#10B981",
+        "icon": "User",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "folder_4",
+    "name": "Images",
+    "parentId": null,
+    "path": "/Images",
+    "createdAt": "2024-01-16T09:00:00Z",
+    "updatedAt": "2024-01-16T09:00:00Z",
+    "color": "#8B5CF6",
+    "icon": "Image",
+    "children": [
+      {
+        "id": "folder_5",
+        "name": "Screenshots",
+        "parentId": "folder_4",
+        "path": "/Images/Screenshots",
+        "createdAt": "2024-01-16T09:30:00Z",
+        "updatedAt": "2024-01-16T09:30:00Z",
+        "color": "#F59E0B",
+        "icon": "Camera",
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "folder_6",
+    "name": "Videos",
+    "parentId": null,
+    "path": "/Videos",
+    "createdAt": "2024-01-17T14:00:00Z",
+    "updatedAt": "2024-01-17T14:00:00Z",
+    "color": "#EC4899",
+    "icon": "Video",
+    "children": []
+  }
+]

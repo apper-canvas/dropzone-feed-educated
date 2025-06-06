@@ -36,7 +36,7 @@ export default {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
         heading: ['Inter', 'ui-sans-serif', 'system-ui']
       },
-      boxShadow: {
+boxShadow: {
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
         'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
         'neu-light': '8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff',
@@ -45,8 +45,12 @@ export default {
       borderRadius: {
         'xl': '0.75rem',
         '2xl': '1rem'
+      },
+      animation: {
+        'pulse-soft': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-soft': 'bounce 1s infinite'
       }
-    },
+    }
   },
   plugins: [],
 }

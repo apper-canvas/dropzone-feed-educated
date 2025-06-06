@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'react-toastify'
 import ApperIcon from '../components/ApperIcon'
 import MainFeature from '../components/MainFeature'
-import { fileService } from '../services'
+import { fileService, folderService } from '../services'
 
 function Home({ darkMode, setDarkMode }) {
   const [files, setFiles] = useState([])
@@ -14,26 +14,41 @@ function Home({ darkMode, setDarkMode }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
   const [showPreview, setShowPreview] = useState(false)
+  
+  // Folder organization state
+  const [folders, setFolders] = useState([])
+  const [selectedFolderId, setSelectedFolderId] = useState(null)
+  const [showSidebar, setShowSidebar] = useState(true)
+  const [foldersLoading, setFoldersLoading] = useState(false)
 
-  useEffect(() => {
-    const loadFiles = async () => {
+useEffect(() => {
+    const loadData = async () => {
       setLoading(true)
+      setFoldersLoading(true)
       try {
-        const result = await fileService.getAll()
-        setFiles(result || [])
+        // Load both files and folders
+        const [filesResult, foldersResult] = await Promise.all([
+          fileService.getAll(),
+          folderService.getAll()
+        ])
+        setFiles(filesResult || [])
+        setFolders(foldersResult || [])
       } catch (err) {
         setError(err.message)
-        toast.error('Failed to load files')
+        toast.error('Failed to load data')
       } finally {
         setLoading(false)
+        setFoldersLoading(false)
       }
     }
-    loadFiles()
+    loadData()
   }, [])
 
-  const filteredFiles = files.filter(file => 
-    file?.name?.toLowerCase().includes(searchTerm.toLowerCase()) || ''
-  )
+const filteredFiles = files.filter(file => {
+    const matchesSearch = file?.name?.toLowerCase().includes(searchTerm.toLowerCase()) || ''
+    const matchesFolder = selectedFolderId ? file.folderId === selectedFolderId : true
+    return matchesSearch && matchesFolder
+  })
 
   const handleDeleteFile = async (fileId) => {
     try {
@@ -57,6 +72,77 @@ function Home({ darkMode, setDarkMode }) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB']
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+  // Folder management functions
+  const handleFolderSelect = (folderId) => {
+    setSelectedFolderId(folderId)
+  }
+
+  const handleCreateFolder = async (folderName, parentId = null) => {
+    try {
+      const newFolder = await folderService.create({
+        name: folderName,
+        parentId: parentId,
+        path: parentId ? `${getFolderPath(parentId)}/${folderName}` : `/${folderName}`,
+        color: '#3B82F6',
+        icon: 'Folder'
+      })
+      
+      // Reload folders to get updated tree
+      const updatedFolders = await folderService.getAll()
+      setFolders(updatedFolders)
+      toast.success('Folder created successfully')
+      return newFolder
+    } catch (err) {
+      toast.error('Failed to create folder')
+      throw err
+    }
+  }
+
+  const handleDeleteFolder = async (folderId) => {
+    try {
+      await folderService.delete(folderId)
+      const updatedFolders = await folderService.getAll()
+      setFolders(updatedFolders)
+      
+      // Reset selected folder if it was deleted
+      if (selectedFolderId === folderId) {
+        setSelectedFolderId(null)
+      }
+      
+      toast.success('Folder deleted successfully')
+    } catch (err) {
+      toast.error('Failed to delete folder')
+    }
+  }
+
+  const handleMoveFile = async (fileId, targetFolderId) => {
+    try {
+      await fileService.moveToFolder(fileId, targetFolderId)
+      const updatedFiles = await fileService.getAll()
+      setFiles(updatedFiles)
+      toast.success('File moved successfully')
+    } catch (err) {
+      toast.error('Failed to move file')
+    }
+  }
+
+  const getFolderPath = (folderId) => {
+    const findFolderPath = (folders, targetId, currentPath = '') => {
+      for (const folder of folders) {
+        const newPath = currentPath + '/' + folder.name
+        if (folder.id === targetId) {
+          return newPath
+        }
+        if (folder.children && folder.children.length > 0) {
+          const childPath = findFolderPath(folder.children, targetId, newPath)
+          if (childPath) return childPath
+        }
+      }
+      return null
+    }
+    return findFolderPath(folders, folderId) || '/'
   }
 
   if (loading) {
@@ -138,11 +224,92 @@ function Home({ darkMode, setDarkMode }) {
         </div>
       </header>
 
-      {/* Main Content */}
+{/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Upload Area */}
-          <div className="lg:col-span-3">
+        <div className={`grid gap-8 ${showSidebar ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} transition-all duration-300`}>
+          
+          {/* File Organization Sidebar */}
+          {showSidebar && (
+            <div className="lg:col-span-1">
+              <div className="bg-white dark:bg-surface-800 rounded-xl shadow-card sticky top-24 max-h-[calc(100vh-6rem)] overflow-hidden">
+                <div className="p-4 border-b border-surface-200 dark:border-surface-700">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-surface-900 dark:text-white">
+                      Folders
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleCreateFolder('New Folder')}
+                        className="p-1.5 text-surface-500 hover:text-primary transition-colors"
+                        title="Create Folder"
+                      >
+                        <ApperIcon name="FolderPlus" size={16} />
+                      </button>
+                      <button
+                        onClick={() => setShowSidebar(false)}
+                        className="p-1.5 text-surface-500 hover:text-surface-700 dark:hover:text-surface-300 transition-colors"
+                      >
+                        <ApperIcon name="X" size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-4 overflow-y-auto max-h-96">
+                  {foldersLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                    </div>
+                  ) : (
+                    <div className="space-y-1">
+                      {/* All Files Option */}
+                      <button
+                        onClick={() => handleFolderSelect(null)}
+                        className={`w-full flex items-center space-x-2 p-2 rounded-lg text-left transition-colors ${
+                          selectedFolderId === null
+                            ? 'bg-primary/10 text-primary'
+                            : 'text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700'
+                        }`}
+                      >
+                        <ApperIcon name="Files" size={16} />
+                        <span className="text-sm font-medium">All Files</span>
+                        <span className="ml-auto text-xs text-surface-500">
+                          {files.length}
+                        </span>
+                      </button>
+                      
+                      {/* Folder Tree */}
+                      {folders.map((folder) => (
+                        <FolderTreeItem
+                          key={folder.id}
+                          folder={folder}
+                          selectedFolderId={selectedFolderId}
+                          onSelect={handleFolderSelect}
+                          onDelete={handleDeleteFolder}
+                          files={files}
+                          level={0}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {/* Toggle Sidebar Button (when hidden) */}
+          {!showSidebar && (
+            <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40">
+              <button
+                onClick={() => setShowSidebar(true)}
+                className="p-2 bg-white dark:bg-surface-800 rounded-lg shadow-card text-surface-600 dark:text-surface-300 hover:text-primary transition-colors"
+              >
+                <ApperIcon name="FolderOpen" size={20} />
+              </button>
+            </div>
+          )}
+{/* Upload Area */}
+          <div className={`${showSidebar ? 'lg:col-span-3' : 'lg:col-span-3'}`}>
             <MainFeature 
               files={files}
               setFiles={setFiles}
@@ -303,7 +470,7 @@ function Home({ darkMode, setDarkMode }) {
                 </div>
               )}
             </div>
-          </div>
+</div>
         </div>
       </main>
 
@@ -375,6 +542,57 @@ function Home({ darkMode, setDarkMode }) {
         )}
       </AnimatePresence>
     </div>
+  )
+}
+
+// Simple FolderTreeItem component (inline for now)
+function FolderTreeItem({ folder, selectedFolderId, onSelect, onDelete, files, level }) {
+  const [isExpanded, setIsExpanded] = useState(true)
+  const filesInFolder = files.filter(f => f.folderId === folder.id).length
+  
+  return (
+    <div>
+      <button
+        onClick={() => onSelect(folder.id)}
+        className={`w-full flex items-center space-x-2 p-2 rounded-lg text-left transition-colors ${
+          selectedFolderId === folder.id
+            ? 'bg-primary/10 text-primary'
+            : 'text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700'
+        }`}
+        style={{ paddingLeft: `${8 + level * 16}px` }}
+      >
+        {folder.children && folder.children.length > 0 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsExpanded(!isExpanded)
+            }}
+            className="p-0.5"
+          >
+            <ApperIcon 
+              name={isExpanded ? "ChevronDown" : "ChevronRight"} 
+              size={12} 
+            />
+          </button>
+        )}
+        <ApperIcon name={folder.icon || "Folder"} size={16} />
+        <span className="text-sm font-medium flex-1">{folder.name}</span>
+        <span className="text-xs text-surface-500">{filesInFolder}</span>
+      </button>
+      
+      {isExpanded && folder.children && folder.children.map((child) => (
+        <FolderTreeItem
+          key={child.id}
+          folder={child}
+          selectedFolderId={selectedFolderId}
+          onSelect={onSelect}
+          onDelete={onDelete}
+          files={files}
+          level={level + 1}
+        />
+      ))}
+    </div>
+</div>
   )
 }
 

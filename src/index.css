@@ -52,7 +52,36 @@ body {
     transform: translateY(0) scale(1);
   }
   100% {
-    opacity: 0;
+opacity: 0;
     transform: translateY(-100px) scale(0);
   }
+}
+
+/* Drag and Drop Styles */
+.drag-preview {
+  @apply bg-primary/10 border-2 border-dashed border-primary rounded-lg;
+}
+
+.drop-zone {
+  @apply bg-accent/10 border-2 border-dashed border-accent rounded-lg;
+}
+
+.folder-tree {
+  @apply space-y-1;
+}
+
+.folder-item {
+  @apply flex items-center space-x-2 p-2 rounded-lg cursor-pointer transition-colors;
+}
+
+.folder-item:hover {
+  @apply bg-surface-100 dark:bg-surface-700;
+}
+
+.folder-item.selected {
+  @apply bg-primary/10 dark:bg-primary/20 text-primary;
+}
+
+.folder-item.drag-over {
+  @apply bg-accent/20 border border-accent;
 }
