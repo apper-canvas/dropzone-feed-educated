@@ -1,0 +1,134 @@
+[
+  {
+    "id": "file_001",
+    "name": "vacation-photos.zip",
+    "size": 15728640,
+    "type": "application/zip",
+    "uploadedAt": "2024-01-15T10:30:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
+    "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200"
+  },
+  {
+    "id": "file_002",
+    "name": "presentation.pdf",
+    "size": 2457600,
+    "type": "application/pdf",
+    "uploadedAt": "2024-01-15T14:22:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400",
+    "thumbnail": null
+  },
+  {
+    "id": "file_003",
+    "name": "mountain-landscape.jpg",
+    "size": 5242880,
+    "type": "image/jpeg",
+    "uploadedAt": "2024-01-16T09:15:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200"
+  },
+  {
+    "id": "file_004",
+    "name": "video-intro.mp4",
+    "size": 52428800,
+    "type": "video/mp4",
+    "uploadedAt": "2024-01-16T11:45:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400",
+    "thumbnail": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=200"
+  },
+  {
+    "id": "file_005",
+    "name": "spreadsheet-data.xlsx",
+    "size": 1048576,
+    "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "uploadedAt": "2024-01-17T08:30:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=400",
+    "thumbnail": null
+  },
+  {
+    "id": "file_006",
+    "name": "beach-sunset.png",
+    "size": 8388608,
+    "type": "image/png",
+    "uploadedAt": "2024-01-17T16:20:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200"
+  },
+  {
+    "id": "file_007",
+    "name": "audio-track.mp3",
+    "size": 7340032,
+    "type": "audio/mpeg",
+    "uploadedAt": "2024-01-18T12:10:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
+    "thumbnail": null
+  },
+  {
+    "id": "file_008",
+    "name": "design-mockup.psd",
+    "size": 25165824,
+    "type": "image/vnd.adobe.photoshop",
+    "uploadedAt": "2024-01-18T15:45:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=400",
+    "thumbnail": "https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=200"
+  },
+  {
+    "id": "file_009",
+    "name": "contract-document.docx",
+    "size": 524288,
+    "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "uploadedAt": "2024-01-19T10:25:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=400",
+    "thumbnail": null
+  },
+  {
+    "id": "file_010",
+    "name": "city-night.gif",
+    "size": 3145728,
+    "type": "image/gif",
+    "uploadedAt": "2024-01-19T18:30:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=200"
+  },
+  {
+    "id": "file_011",
+    "name": "forest-walk.jpg",
+    "size": 6291456,
+    "type": "image/jpeg",
+    "uploadedAt": "2024-01-20T07:15:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800",
+    "thumbnail": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200"
+  },
+  {
+    "id": "file_012",
+    "name": "team-meeting.mov",
+    "size": 73400320,
+    "type": "video/quicktime",
+    "uploadedAt": "2024-01-20T13:40:00Z",
+    "status": "completed",
+    "progress": 100,
+    "url": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400",
+    "thumbnail": "https://images.unsplash.com/photo-1552664730-d307ca884978?w=200"
+  }
+]

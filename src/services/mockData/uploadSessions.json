@@ -1,0 +1,50 @@
+[
+  {
+    "id": "session_001",
+    "files": [
+      {
+        "id": "file_001",
+        "name": "vacation-photos.zip",
+        "size": 15728640,
+        "status": "completed"
+      }
+    ],
+    "startedAt": "2024-01-15T10:30:00Z",
+    "totalSize": 15728640,
+    "completedSize": 15728640
+  },
+  {
+    "id": "session_002",
+    "files": [
+      {
+        "id": "file_002",
+        "name": "presentation.pdf",
+        "size": 2457600,
+        "status": "completed"
+      },
+      {
+        "id": "file_003",
+        "name": "mountain-landscape.jpg",
+        "size": 5242880,
+        "status": "completed"
+      }
+    ],
+    "startedAt": "2024-01-16T09:15:00Z",
+    "totalSize": 7700480,
+    "completedSize": 7700480
+  },
+  {
+    "id": "session_003",
+    "files": [
+      {
+        "id": "file_004",
+        "name": "video-intro.mp4",
+        "size": 52428800,
+        "status": "completed"
+      }
+    ],
+    "startedAt": "2024-01-16T11:45:00Z",
+    "totalSize": 52428800,
+    "completedSize": 52428800
+  }
+]
